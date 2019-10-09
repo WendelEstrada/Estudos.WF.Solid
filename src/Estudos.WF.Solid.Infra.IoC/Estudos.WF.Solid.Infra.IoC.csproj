@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap.cs" />
+    <Compile Include="BootstrapWeb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +55,10 @@
     <ProjectReference Include="..\Estudos.WF.Solid.Core\Estudos.WF.Solid.Core.csproj">
       <Project>{F0699832-7CFE-449D-9E6E-2E0132BA7061}</Project>
       <Name>Estudos.WF.Solid.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Estudos.WF.Solid.Infra.Data\Estudos.WF.Solid.Infra.Data.csproj">
+      <Project>{53BEF8E7-3512-4FB7-A423-E605B4445ED2}</Project>
+      <Name>Estudos.WF.Solid.Infra.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Estudos.WF.Solid.Infra.HttpClients\Estudos.WF.Solid.Infra.HttpClients.csproj">
       <Project>{A1D1722E-E019-4ECF-A7DE-4770A4591AF1}</Project>

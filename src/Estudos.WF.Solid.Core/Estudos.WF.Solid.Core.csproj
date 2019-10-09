@@ -41,14 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\ArtesMarciais.cs" />
+    <Compile Include="Entities\Atleta.cs" />
     <Compile Include="Entities\Lutador.cs" />
     <Compile Include="Interfaces\CoreServices\ILutadorService.cs" />
     <Compile Include="Interfaces\HttpClientServices\ILutadorHttpClientService.cs" />
+    <Compile Include="Interfaces\Repositories\IArtesMarciaisRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAtletaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CoreServices\LutadorService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
