@@ -15,7 +15,7 @@ namespace Estudos.WF.Solid.Service.WebApi.Hubs
 
         public string JoinTournament(string nomeDoLutador)
         {
-            Groups.Add(nomeDoLutador, nomeDoGrupo).Wait();
+            Groups.Add(nomeDoLutador, nomeDoGrupo);
             return $"{nomeDoLutador} joined {nomeDoGrupo}";
         }
 
@@ -25,6 +25,9 @@ namespace Estudos.WF.Solid.Service.WebApi.Hubs
             return $"{nomeDoLutador} removed {nomeDoGrupo}";
         }
 
-        public void DisplayMessageAll(string message) => Clients.All.displayMessage($"Clients.All from {Context.ConnectionId}: {message}");
+        public void DisplayMessageAll(string message)
+        {
+            Clients.All.DisplayMessageAll($"Clients.All from {Context.ConnectionId}: {message}");
+        }
     }
 }
