@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28922.388
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - UI", "1 - UI", "{DE75DBD2-0A6A-46F8-A873-AD7B99B0312F}"
 EndProject
@@ -28,6 +28,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estudos.WF.Solid.Infra.IoC", "src\Estudos.WF.Solid.Infra.IoC\Estudos.WF.Solid.Infra.IoC.csproj", "{B9507F43-43F9-413C-946D-F2428B09A006}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estudos.WF.Solid.Service.WebApi", "src\Estudos.WF.Solid.Service.WebApi\Estudos.WF.Solid.Service.WebApi.csproj", "{B4C438BE-B32A-4EE0-A0A7-840138674C7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estudos.WF.Solid.UI.SignalR.Tester", "src\Estudos.WF.Solid.UI.SignalR.Tester\Estudos.WF.Solid.UI.SignalR.Tester.csproj", "{99B07FE9-E95B-4978-99F3-D63BB0FDC7F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.4 - SignalR", "4.4 - SignalR", "{0CDEB628-0DE2-48EF-97D7-B6AE8928F9E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estudos.WF.Solid.Infra.SignalR", "src\Estudos.WF.Solid.Infra.SignalR\Estudos.WF.Solid.Infra.SignalR.csproj", "{D3D05577-CAF7-481F-94E8-38E480BA9BAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +65,14 @@ Global
 		{B4C438BE-B32A-4EE0-A0A7-840138674C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4C438BE-B32A-4EE0-A0A7-840138674C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4C438BE-B32A-4EE0-A0A7-840138674C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99B07FE9-E95B-4978-99F3-D63BB0FDC7F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99B07FE9-E95B-4978-99F3-D63BB0FDC7F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99B07FE9-E95B-4978-99F3-D63BB0FDC7F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99B07FE9-E95B-4978-99F3-D63BB0FDC7F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3D05577-CAF7-481F-94E8-38E480BA9BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3D05577-CAF7-481F-94E8-38E480BA9BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3D05577-CAF7-481F-94E8-38E480BA9BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3D05577-CAF7-481F-94E8-38E480BA9BAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +87,9 @@ Global
 		{6EB3B0D9-2915-4C86-8F17-4BDA4A95D631} = {DE75DBD2-0A6A-46F8-A873-AD7B99B0312F}
 		{B9507F43-43F9-413C-946D-F2428B09A006} = {4462BBA6-9E3F-4A02-BED2-327B318E4CA0}
 		{B4C438BE-B32A-4EE0-A0A7-840138674C7B} = {B919B0F1-10BC-4F48-9DAB-0CEEC7D88078}
+		{99B07FE9-E95B-4978-99F3-D63BB0FDC7F5} = {DE75DBD2-0A6A-46F8-A873-AD7B99B0312F}
+		{0CDEB628-0DE2-48EF-97D7-B6AE8928F9E3} = {38CA65F4-2CBE-403F-A19D-B7DBB9B76BFD}
+		{D3D05577-CAF7-481F-94E8-38E480BA9BAB} = {0CDEB628-0DE2-48EF-97D7-B6AE8928F9E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E0781EFA-D8D4-4CA5-A5E5-F723C2E33E41}
