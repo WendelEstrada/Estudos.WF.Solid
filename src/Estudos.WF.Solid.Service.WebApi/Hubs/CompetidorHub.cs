@@ -21,7 +21,7 @@ namespace Estudos.WF.Solid.Service.WebApi.Hubs
 
         public string LeaveTournament(string nomeDoLutador)
         {
-            Groups.Remove(nomeDoLutador, nomeDoGrupo).Wait();
+            Groups.Remove(nomeDoLutador, nomeDoGrupo);
             return $"{nomeDoLutador} removed {nomeDoGrupo}";
         }
 
