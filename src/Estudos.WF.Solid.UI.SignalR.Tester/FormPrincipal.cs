@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNet.SignalR.Client;
+﻿using Estudos.WF.Solid.Core.Interfaces.SignalRServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -13,51 +14,25 @@ namespace Estudos.WF.Solid.UI.SignalR.Tester
 {
     public partial class FormPrincipal : Form
     {
-        private HubConnection _hubConnection;
-        private IHubProxy _hubProxy;
+        private readonly ISignalRConector _signalRConector;
 
-        public FormPrincipal()
+        public FormPrincipal(ISignalRConector signalRConector)
         {
+            _signalRConector = signalRConector;
+
             InitializeComponent();
-
-            _hubConnection = new HubConnection("http://localhost:55235/signalr");
-            _hubProxy = _hubConnection.CreateHubProxy("CompetidorHub");
-
-            _hubConnection.Start().ContinueWith(task =>
-            {
-                if (task.IsFaulted)
-                    MessageBox.Show(task.Exception.Message);
-            }).Wait();
         }
 
         private void BtnConectar_Click(object sender, EventArgs e)
         {
-            _hubProxy.Invoke<string>("JoinTournament", "Adonis Creed").ContinueWith(task => {
-                if (task.IsFaulted)
-                {
-                    Console.WriteLine("There was an error calling send: {0}",
-                                      task.Exception.GetBaseException());
-                }
-                else
-                {
-                    Console.WriteLine(task.Result);
-                }
-            });
+            _signalRConector.Connect(ConfigurationManager.AppSettings["UrlSignalR"], "CompetidorHub");
+            _signalRConector.Subscribe<string>("JoinTournament", "Adonis Creed");
+            _signalRConector.On = response => MessageBox.Show(response.ToString(), "Tester", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void BtnEnviarMensagem_Click(object sender, EventArgs e)
         {
-            _hubProxy.Invoke<string>("DisplayMessageAll", TxtMensagem.Text).ContinueWith(task => {
-                if (task.IsFaulted)
-                {
-                    Console.WriteLine("There was an error calling send: {0}",
-                                      task.Exception.GetBaseException());
-                }
-                else
-                {
-                    Console.WriteLine(task.Result);
-                }
-            });
+            _signalRConector.SendMessage("DisplayMessageAll", TxtMensagem.Text);
         }
     }
 }

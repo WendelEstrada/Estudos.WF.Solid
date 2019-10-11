@@ -64,6 +64,10 @@
       <Project>{A1D1722E-E019-4ECF-A7DE-4770A4591AF1}</Project>
       <Name>Estudos.WF.Solid.Infra.HttpClients</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Estudos.WF.Solid.Infra.SignalR\Estudos.WF.Solid.Infra.SignalR.csproj">
+      <Project>{D3D05577-CAF7-481F-94E8-38E480BA9BAB}</Project>
+      <Name>Estudos.WF.Solid.Infra.SignalR</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

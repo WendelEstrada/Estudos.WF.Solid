@@ -1,9 +1,10 @@
 ﻿using Estudos.WF.Solid.Core.Interfaces.CoreServices;
+using Estudos.WF.Solid.Core.Interfaces.SignalRServices;
 using Estudos.WF.Solid.UI.Controls;
-using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -16,11 +17,12 @@ namespace Estudos.WF.Solid.UI.Forms
     public partial class FormPrincipal : Form
     {
         private readonly ILutadorService _lutadorService;
-        private HubConnection _hubConnection;
+        private readonly ISignalRConector _signalRConector;
 
-        public FormPrincipal(ILutadorService lutadorService)
+        public FormPrincipal(ILutadorService lutadorService, ISignalRConector signalRConector)
         {
             _lutadorService = lutadorService;
+            _signalRConector = signalRConector;
 
             InitializeComponent();
         }
@@ -48,30 +50,9 @@ namespace Estudos.WF.Solid.UI.Forms
 
         private void BtnConnectSignalR_Click(object sender, EventArgs e)
         {
-            _hubConnection = new HubConnection("http://localhost:55235/signalr");
-            var hub = _hubConnection.CreateHubProxy("CompetidorHub");
-
-            _hubConnection.Start().ContinueWith(task =>
-            {
-                if (task.IsFaulted)
-                    MessageBox.Show(task.Exception.Message);
-            }).Wait();
-
-            hub.Invoke<string>("JoinTournament", "Rocky Balboa").ContinueWith(task => {
-                if (task.IsFaulted)
-                {
-                    Console.WriteLine("There was an error calling send: {0}",
-                                      task.Exception.GetBaseException());
-                }
-                else
-                {
-                    Console.WriteLine(task.Result);
-                }
-            });
-
-            hub.On<string>("DisplayMessageAll", param => {
-                MessageBox.Show(param);
-            });
+            _signalRConector.Connect(ConfigurationManager.AppSettings["UrlSignalR"], "CompetidorHub");
+            _signalRConector.Subscribe<string>("JoinTournament", "Rocky Balboa");
+            _signalRConector.On = response => MessageBox.Show(response.ToString(), "Torneio de Luta", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

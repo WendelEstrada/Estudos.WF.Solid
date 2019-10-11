@@ -8,7 +8,10 @@ namespace Estudos.WF.Solid.Core.Interfaces.SignalRServices
 {
     public interface ISignalRConector
     {
-        Task Connect(string url, string proxyName);
-        Task<T> Invoke<T>(string method, params object[] args);
+        Action<object> On { get; set; }
+
+        void Connect(string url, string proxyName);
+        void Subscribe<T>(string method, params object[] args);
+        void SendMessage(string method, params object[] args);
     }
 }
