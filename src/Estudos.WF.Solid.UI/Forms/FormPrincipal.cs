@@ -51,13 +51,11 @@ namespace Estudos.WF.Solid.UI.Forms
             _hubConnection = new HubConnection("http://localhost:55235/signalr");
             var hub = _hubConnection.CreateHubProxy("CompetidorHub");
 
-            Task teste = _hubConnection.Start().ContinueWith(task =>
+            _hubConnection.Start().ContinueWith(task =>
             {
                 if (task.IsFaulted)
                     MessageBox.Show(task.Exception.Message);
-            });
-
-            teste.Wait();
+            }).Wait();
 
             hub.Invoke<string>("JoinTournament", "Rocky Balboa").ContinueWith(task => {
                 if (task.IsFaulted)
@@ -72,7 +70,7 @@ namespace Estudos.WF.Solid.UI.Forms
             });
 
             hub.On<string>("DisplayMessageAll", param => {
-                Console.WriteLine(param);
+                MessageBox.Show(param);
             });
         }
     }
