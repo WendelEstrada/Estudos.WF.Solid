@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using Estudos.WF.Solid.Core.Entities;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,11 @@ namespace Estudos.WF.Solid.Service.WebApi.Hubs
         public void DisplayMessageAll(string message)
         {
             Clients.All.DisplayMessageAll($"Clients.All from {Context.ConnectionId}: {message}");
+        }
+
+        public void CadastrarLutadorNoTorneio(Lutador lutador)
+        {
+            Clients.All.LutadorAdicionado(lutador);
         }
     }
 }
