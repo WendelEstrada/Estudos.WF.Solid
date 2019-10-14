@@ -15,20 +15,21 @@ namespace Estudos.WF.Solid.UI.SignalR.Tester
 {
     public partial class FormPrincipal : Form
     {
-        private readonly ISignalRConector _signalRConector;
+        private readonly ILutadorSignalRService _lutadorSignalRService;
 
-        public FormPrincipal(ISignalRConector signalRConector)
+        public FormPrincipal(ILutadorSignalRService lutadorSignalRService)
         {
-            _signalRConector = signalRConector;
+            _lutadorSignalRService = lutadorSignalRService;
 
             InitializeComponent();
         }
 
         private void BtnConectar_Click(object sender, EventArgs e)
         {
-            _signalRConector.Connect(ConfigurationManager.AppSettings["UrlSignalR"], "CompetidorHub");
-            _signalRConector.Subscribe<string>("JoinTournament", "Adonis Creed");
-            _signalRConector.On = response =>
+            _lutadorSignalRService.Connect(ConfigurationManager.AppSettings["UrlSignalR"], "CompetidorHub");
+            _lutadorSignalRService.Subscribe<string>("JoinTournament", "Adonis Creed");
+            _lutadorSignalRService.ToListen<Lutador>("LutadorAdicionado");
+            _lutadorSignalRService.On = response =>
             {
                 var lutador = response as Lutador;
 
@@ -40,7 +41,7 @@ namespace Estudos.WF.Solid.UI.SignalR.Tester
         {
             var lutador = new Lutador(1, "Novo lutador", 31, new List<string> { "Boxe" }, 0, 0, 0);
 
-            _signalRConector.SendMessage("CadastrarLutadorNoTorneio", lutador);
+            _lutadorSignalRService.SendMessage("CadastrarLutadorNoTorneio", lutador);
         }
     }
 }

@@ -19,12 +19,12 @@ namespace Estudos.WF.Solid.UI.Forms
     public partial class FormPrincipal : Form
     {
         private readonly ILutadorService _lutadorService;
-        private readonly ISignalRConector _signalRConector;
+        private readonly ILutadorSignalRService _lutadorSignalRService;
 
-        public FormPrincipal(ILutadorService lutadorService, ISignalRConector signalRConector)
+        public FormPrincipal(ILutadorService lutadorService, ILutadorSignalRService lutadorSignalRService)
         {
             _lutadorService = lutadorService;
-            _signalRConector = signalRConector;
+            _lutadorSignalRService = lutadorSignalRService;
 
             InitializeComponent();
         }
@@ -52,9 +52,10 @@ namespace Estudos.WF.Solid.UI.Forms
 
         private void BtnConnectSignalR_Click(object sender, EventArgs e)
         {
-            _signalRConector.Connect(ConfigurationManager.AppSettings["UrlSignalR"], "CompetidorHub");
-            _signalRConector.Subscribe<string>("JoinTournament", "Rocky Balboa");
-            _signalRConector.On = response =>
+            _lutadorSignalRService.Connect(ConfigurationManager.AppSettings["UrlSignalR"], "CompetidorHub");
+            _lutadorSignalRService.Subscribe<string>("JoinTournament", "Adonis Creed");
+            _lutadorSignalRService.ToListen<Lutador>("LutadorAdicionado");
+            _lutadorSignalRService.On = response =>
             {
                 var lutador = response as Lutador;
 

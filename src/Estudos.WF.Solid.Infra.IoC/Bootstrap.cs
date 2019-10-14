@@ -22,6 +22,7 @@ namespace Estudos.WF.Solid.Infra.IoC
             container.Register<ILutadorService, LutadorService>(Lifestyle.Singleton);
             container.Register<ILutadorHttpClientService, LutadorHttpClientService>(Lifestyle.Singleton);
             container.Register<ISignalRConector, SignalRConector>(Lifestyle.Singleton);
+            container.Register<ILutadorSignalRService, LutadorSignalRService>(Lifestyle.Singleton);
 
             container.Verify();
             return container;

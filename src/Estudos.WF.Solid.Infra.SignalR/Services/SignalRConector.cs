@@ -1,24 +1,57 @@
 ﻿using Estudos.WF.Solid.Core.Entities;
 using Estudos.WF.Solid.Core.Interfaces.SignalRServices;
 using Microsoft.AspNet.SignalR.Client;
-using Polly;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Timers;
 
 namespace Estudos.WF.Solid.Infra.SignalR.Services
 {
     public class SignalRConector : ISignalRConector
     {
-        private HubConnection _hubConnection;
-        private IHubProxy _hubProxy;
+        protected HubConnection _hubConnection;
+        protected IHubProxy _hubProxy;
+
+        private string _url;
+        private string _proxyName;
+
+        private string _method;
+        private object[] _args;
+
+        private Timer _timer = new Timer();
 
         public Action<object> On { get; set; }
 
+        private void ConnectionStateChanged(StateChange connectionState)
+        {
+            if (connectionState.NewState == ConnectionState.Disconnected || connectionState.NewState == ConnectionState.Reconnecting)
+            {
+                if (_timer.Enabled == false)
+                {
+                    _timer.Interval = 10000;
+                    _timer.Start();
+                    _timer.Elapsed += Timer_Elapsed;
+                }
+            }
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (_hubConnection.State == ConnectionState.Connected)
+            {
+                Subscribe<string>(_method, _args);
+
+                _timer.Stop();
+                return;
+            }
+
+            Connect(_url, _proxyName);
+        }
+
         public void Connect(string url, string proxyName)
         {
+            _url = url;
+            _proxyName = proxyName;
+
             _hubConnection = new HubConnection(url);
             _hubProxy = _hubConnection.CreateHubProxy(proxyName);
 
@@ -28,43 +61,24 @@ namespace Estudos.WF.Solid.Infra.SignalR.Services
                     Console.WriteLine(task.Exception.Message);
             }).Wait();
 
-            _hubConnection.StateChanged += _hubConnection_StateChanged;
-        }
-
-        private void _hubConnection_StateChanged(StateChange obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SendMessage(string method, params object[] args)
-        {
-            _hubProxy.Invoke<string>(method, args).ContinueWith(task => {
-                if (task.IsFaulted)
-                    Console.WriteLine($"There was an error calling send: {task.Exception.GetBaseException()}");
-                else
-                    Console.WriteLine(task.Result);
-            });
+            _hubConnection.StateChanged += ConnectionStateChanged;
         }
 
         public void Subscribe<T>(string method, params object[] args)
         {
+            _method = method;
+            _args = args;
+
             _hubProxy.Invoke<T>(method, args).ContinueWith(task =>
             {
                 if (task.IsFaulted)
                     Console.WriteLine($"There was an error calling send: {task.Exception.GetBaseException()}");
-                else
-                    Console.WriteLine(task.Result);
-            });
-
-            _hubProxy.On<Lutador>("LutadorAdicionado", param =>
-            {
-                On.Invoke(param);
             });
         }
 
-        public void Unsubscribe<T>(string method, params object[] args)
+        public void Disconnect()
         {
-            throw new NotImplementedException();
+            _hubConnection.Dispose();
         }
     }
 }
