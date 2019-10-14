@@ -1,4 +1,5 @@
-﻿using Estudos.WF.Solid.Core.Interfaces.SignalRServices;
+﻿using Estudos.WF.Solid.Core.Entities;
+using Estudos.WF.Solid.Core.Interfaces.SignalRServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,12 +28,19 @@ namespace Estudos.WF.Solid.UI.SignalR.Tester
         {
             _signalRConector.Connect(ConfigurationManager.AppSettings["UrlSignalR"], "CompetidorHub");
             _signalRConector.Subscribe<string>("JoinTournament", "Adonis Creed");
-            _signalRConector.On = response => MessageBox.Show(response.ToString(), "Tester", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            _signalRConector.On = response =>
+            {
+                var lutador = response as Lutador;
+
+                Console.WriteLine(lutador.Nome);
+            };
         }
 
         private void BtnEnviarMensagem_Click(object sender, EventArgs e)
         {
-            _signalRConector.SendMessage("DisplayMessageAll", TxtMensagem.Text);
+            var lutador = new Lutador(1, "Novo lutador", 31, new List<string> { "Boxe" }, 0, 0, 0);
+
+            _signalRConector.SendMessage("CadastrarLutadorNoTorneio", lutador);
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using Estudos.WF.Solid.Core.Interfaces.SignalRServices;
+﻿using Estudos.WF.Solid.Core.Entities;
+using Estudos.WF.Solid.Core.Interfaces.SignalRServices;
 using Microsoft.AspNet.SignalR.Client;
+using Polly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace Estudos.WF.Solid.Infra.SignalR.Services
         private HubConnection _hubConnection;
         private IHubProxy _hubProxy;
 
-        public Action<Object> On { get; set; }
+        public Action<object> On { get; set; }
 
         public void Connect(string url, string proxyName)
         {
@@ -25,6 +27,13 @@ namespace Estudos.WF.Solid.Infra.SignalR.Services
                 if (task.IsFaulted)
                     Console.WriteLine(task.Exception.Message);
             }).Wait();
+
+            _hubConnection.StateChanged += _hubConnection_StateChanged;
+        }
+
+        private void _hubConnection_StateChanged(StateChange obj)
+        {
+            throw new NotImplementedException();
         }
 
         public void SendMessage(string method, params object[] args)
@@ -47,10 +56,15 @@ namespace Estudos.WF.Solid.Infra.SignalR.Services
                     Console.WriteLine(task.Result);
             });
 
-            _hubProxy.On<string>("DisplayMessageAll", param =>
+            _hubProxy.On<Lutador>("LutadorAdicionado", param =>
             {
                 On.Invoke(param);
             });
+        }
+
+        public void Unsubscribe<T>(string method, params object[] args)
+        {
+            throw new NotImplementedException();
         }
     }
 }

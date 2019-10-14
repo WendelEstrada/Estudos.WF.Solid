@@ -1,4 +1,5 @@
-﻿using Estudos.WF.Solid.Core.Interfaces.CoreServices;
+﻿using Estudos.WF.Solid.Core.Entities;
+using Estudos.WF.Solid.Core.Interfaces.CoreServices;
 using Estudos.WF.Solid.Core.Interfaces.SignalRServices;
 using Estudos.WF.Solid.UI.Controls;
 using System;
@@ -9,6 +10,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -52,7 +54,29 @@ namespace Estudos.WF.Solid.UI.Forms
         {
             _signalRConector.Connect(ConfigurationManager.AppSettings["UrlSignalR"], "CompetidorHub");
             _signalRConector.Subscribe<string>("JoinTournament", "Rocky Balboa");
-            _signalRConector.On = response => MessageBox.Show(response.ToString(), "Torneio de Luta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            _signalRConector.On = response =>
+            {
+                var lutador = response as Lutador;
+
+                var lutadorUserControl = new LutadorUserControl()
+                {
+                    NomeDoLutador = lutador.Nome,
+                    Idade = lutador.Idade,
+                    Derrotas = lutador.Derrotas,
+                    Vitorias = lutador.Vitorias,
+                    Lutas = lutador.Lutas,
+                    QuantidadeDeArtesMarciais = lutador.ArtesMarciais.Count(),
+                    Location = new Point()
+                };
+
+                if (flowLayoutPanel.InvokeRequired)
+                {
+                    flowLayoutPanel.Invoke(new MethodInvoker(delegate
+                    {
+                        flowLayoutPanel.Controls.Add(lutadorUserControl);
+                    }));
+                }
+            };
         }
     }
 }

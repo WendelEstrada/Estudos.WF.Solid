@@ -12,6 +12,7 @@ namespace Estudos.WF.Solid.Core.Interfaces.SignalRServices
 
         void Connect(string url, string proxyName);
         void Subscribe<T>(string method, params object[] args);
+        void Unsubscribe<T>(string method, params object[] args);
         void SendMessage(string method, params object[] args);
     }
 }

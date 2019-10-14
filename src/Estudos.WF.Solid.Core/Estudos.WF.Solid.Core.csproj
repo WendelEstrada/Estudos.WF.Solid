@@ -49,6 +49,7 @@
     <Compile Include="Interfaces\Repositories\IArtesMarciaisRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAtletaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRepository.cs" />
+    <Compile Include="Interfaces\SignalRServices\ILutadorSignalRService.cs" />
     <Compile Include="Interfaces\SignalRServices\ISignalRConector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CoreServices\LutadorService.cs" />
